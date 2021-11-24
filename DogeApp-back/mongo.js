@@ -5,15 +5,13 @@ const url = 'mongodb+srv://admin:admin@cluster0.dptsl.mongodb.net/dog-app?retryW
 const breedSchema = new mongoose.Schema({
     title: String
   }, { versionKey: false })
-  const dogSchema = new mongoose.Schema({
+const dogSchema = new mongoose.Schema({
     breed: mongoose.Schema.Types.ObjectId,
     image: String,
     title: String
-  }, { versionKey: false });
-  
-  const Breed = mongoose.model('Breed', breedSchema);
-  const Dog = mongoose.model('Dog', dogSchema );
-
+  }, { versionKey: false }); 
+const Breed = mongoose.model('Breed', breedSchema);
+const Dog = mongoose.model('Dog', dogSchema );
 
 export const handleDog = async () => {
     await mongoose.connect(url, { useUnifiedTopology: true, useNewUrlParser: true });
@@ -25,5 +23,11 @@ export const handleDog = async () => {
     const dogTitle = dogData.message.split('/')[5].split('.')[0];
     const image = dogData.message;
     const dog = new Dog({breed: dogBreed, image: image, title: dogTitle});
-    await dog.save();
+    await dog.save(); 
+}
+export const getAllDogs = async () => {
+    const dogArr = [];
+    dogArr.push( await Dog.find({}).exec());
+    dogArr.push( await Breed.find({}).exec());
+    return dogArr;
 }

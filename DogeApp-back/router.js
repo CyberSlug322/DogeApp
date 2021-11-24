@@ -1,10 +1,10 @@
 import Router from 'express';
-import {handleDog} from './mongo.js';
+import {getAllDogs} from './mongo.js';
 const router = new Router();
 
-
-router.get('/',  (req, res) => {
-    res.send('ss')
+router.get('/', async (req, res) => {
+    const data = await getAllDogs();
+    res.send(JSON.stringify(data));
   })
 
 export default router;

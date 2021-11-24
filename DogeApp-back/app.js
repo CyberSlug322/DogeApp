@@ -12,13 +12,14 @@ app.use(cors());
 app.use('/',router);
 app.use(express.json());
 const start = async() => {
-  try {
-   
+  try { 
     app.listen(PORT, () => {
       console.log(`server works on port ${PORT}`)
     })
-    handleDog();
-    console.log();
+    for ( let i = 0; i < 1; i++) {
+      handleDog();
+    }
+    
   } catch(err) {
     console.log(err);
   }
