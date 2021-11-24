@@ -20,16 +20,10 @@ export const handleDog = async () => {
     const dogData = await getRandomDog();
     const breedTitle = dogData.message.split('/')[4];
     const breed = new Breed({title: breedTitle});
-    await breed.save();
+    const breedObj = await breed.save();
+    const dogBreed = breedObj._id;
     const dogTitle = dogData.message.split('/')[5].split('.')[0];
     const image = dogData.message;
-    const dog = new Dog({image: image, title: dogTitle});
+    const dog = new Dog({breed: dogBreed, image: image, title: dogTitle});
     await dog.save();
-
-}
-function dada () {
-
-    
-   // 
-    //await mongoose.disconnect()
 }
