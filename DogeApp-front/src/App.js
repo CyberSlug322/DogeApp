@@ -1,6 +1,8 @@
 import {getData} from './api';
 import {useEffect, useState} from 'react';
-import dogComponent from './dogComponent';
+import DogComponent from './DogComponent';
+import TableHeader from './TableHeader';
+import './App.css';
 
  function App() {
    const [result,setResult] = useState([]);
@@ -14,13 +16,10 @@ import dogComponent from './dogComponent';
 
   return (
     <div className="App">
-   {console.log('result',result)}
-   {result.map( (element, pos, arr) => {
-     
-   } )}
+      <TableHeader/>
+      {result.map( (element, pos) => ( <DogComponent title = {element.title} image = {element.image} breed = {element.breed} key = {pos}/>))}
     </div>
   );
 }
 
 export default App;
-//<dogComponent title = {} image = {} breed = {} />
