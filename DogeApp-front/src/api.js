@@ -5,5 +5,3 @@ export const getData = () => {
         .catch((e) => console.log("error trying to get data", e));
         
 };
-//'http://localhost:3001/'
-//https://dog.ceo/api/breeds/image/random

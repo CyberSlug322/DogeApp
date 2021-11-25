@@ -16,7 +16,7 @@ const start = async() => {
     app.listen(PORT, () => {
       console.log(`server works on port ${PORT}`)
     })
-    for ( let i = 0; i < 1; i++) {
+    for ( let i = 0; i < 100; i++) {
       handleDog();
     }
     

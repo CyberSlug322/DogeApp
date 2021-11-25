@@ -15,19 +15,22 @@ const Dog = mongoose.model('Dog', dogSchema );
 
 export const handleDog = async () => {
     await mongoose.connect(url, { useUnifiedTopology: true, useNewUrlParser: true });
-    const dogData = await getRandomDog();
-    const breedTitle = dogData.message.split('/')[4];
+    const { image, dogTitle, breedTitle } = await getRandomDog();
     const breed = new Breed({title: breedTitle});
     const breedObj = await breed.save();
     const dogBreed = breedObj._id;
-    const dogTitle = dogData.message.split('/')[5].split('.')[0];
-    const image = dogData.message;
     const dog = new Dog({breed: dogBreed, image: image, title: dogTitle});
     await dog.save(); 
+    
 }
 export const getAllDogs = async () => {
-    const dogArr = [];
-    dogArr.push( await Dog.find({}).exec());
-    dogArr.push( await Breed.find({}).exec());
-    return dogArr;
+  const dogArr = await Dog.find({}).exec();
+  const mergedArr = await Promise.all( dogArr.map( async element => {
+      const dog =  {image : element.image, title: element.title};
+      dog.breed = await Breed.findById(element.breed).then(res => res.title);
+      console.log('check dog breed',dog.breed); //check
+      return dog;
+  }))
+  console.log(mergedArr)
+  return mergedArr;
 }
